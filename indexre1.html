@@ -8,8 +8,8 @@
             <div class="cartao-sp">
                 <div class="cartao-titulo">Equipamento</div>
                 <div class="container-imagem">
-                    <!-- Cole o link da foto entre as aspas abaixo -->
-                    <img id="foto-equipamento" src=https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRpC5rzYgQr8870zdg9Ok9jwSCA2j8y_gdHNt83yEnPg&s=10 alt="Vertopac 2">
+                    <!-- Imagem de teste para demonstração do fluxo -->
+                    <img id="foto-equipamento" src="https://unsplash.com" alt="Vertopac 2">
                 </div>
                 <div class="nome-maquina">VERTOPAC 2 – VP120-4</div>
             </div>
@@ -66,28 +66,24 @@
 </style>
 
 <script>
-    // 1. BANCO DE DADOS GLOBAL (Garante que o script ache os dados independente do escopo)
+    // DOCUMENTOS PÚBLICOS DE TESTE (Para demonstrar a experiência do usuário sem travas de rede)
     window.meusDocumentosEquip = [
         {
-            nome: "VP120-1.pdf",
-            url: "https://grupocimed-my.sharepoint.com/:b:/g/personal/max_silva_grupocimed_com_br/IQCZh-yB4OgpQ7WvFT5z98jgAfGgxq-JEQeDiww6_TflEIw?e=FqR64j?web=0"
+            nome: "VP120-1 - MANUAL DE INSTRUÇÕES GERAIS.pdf",
+            url: "https://w3.org"
         },
         {
             nome: "TRANSP DET DE METAIS TCL1215-090-AB.pdf",
-            url: "https://sharepoint.com&download=1"
+            url: "https://w3.org"
         }
     ];
 
-    // 2. LOGICA DE MONTAGEM BLINDADA
     window.executarMontagemPainel = function() {
         var input = document.getElementById('inputFiltrar');
         var lista = document.getElementById('listaDocsContainer');
         var contador = document.getElementById('total-docs-count');
 
-        // Se o SharePoint ainda não criou os elementos na tela, interrompe sem quebrar
-        if (!input || !lista || !contador) {
-            return false;
-        }
+        if (!input || !lista || !contador) return false;
 
         var dados = window.meusDocumentosEquip;
 
@@ -110,7 +106,6 @@
             });
         }
 
-        // Evento de digitação na busca
         input.oninput = function(e) {
             var busca = e.target.value.toLowerCase();
             var filtrados = dados.filter(function(d) {
@@ -119,14 +114,11 @@
             renderizar(filtrados);
         };
 
-        // Atualiza contagem e lista inicial
         contador.textContent = dados.length + " documentos totais";
         renderizar(dados);
         return true;
     };
 
-    // Tenta executar imediatamente, aos 200ms e aos 1000ms para vencer qualquer lentidão do SharePoint
     window.executarMontagemPainel();
-    setTimeout(window.executarMontagemPainel, 200);
-    setTimeout(window.executarMontagemPainel, 1000);
+    setTimeout(window.executarMontagemPainel, 300);
 </script>

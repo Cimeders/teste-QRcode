@@ -1,0 +1,124 @@
+<div id="app-equipamento-root">
+    <div class="tit-principal">Documentação do Equipamento</div>
+
+    <div class="container-flex">
+        <!-- COLUNA ESQUERDA: INFORMAÇÕES -->
+        <div class="col-esquerda">
+            <!-- Card do Equipamento -->
+            <div class="cartao-sp">
+                <div class="cartao-titulo">Equipamento</div>
+                <div class="container-imagem">
+                    <!-- Imagem de teste para demonstração do fluxo -->
+                    <img id="foto-equipamento" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRpC5rzYgQr8870zdg9Ok9jwSCA2j8y_gdHNt83yEnPg&s=10" alt="Vertopac 2">
+                </div>
+                <div class="nome-maquina">VERTOPAC 2 – VP120-4</div>
+            </div>
+
+            <!-- Card de Contagem -->
+            <div class="cartao-sp">
+                <div class="cartao-titulo">Documentação</div>
+                <div class="icone-doc">📄</div>
+                <div class="contador-doc" id="total-docs-count">Carregando...</div>
+            </div>
+        </div>
+
+        <!-- COLUNA DIREITA: BUSCA E LISTA -->
+        <div class="col-direita">
+            <div class="cartao-sp busca-bloco">
+                <div class="cartao-titulo">Pesquisa</div>
+                
+                <div class="campo-busca-wrapper">
+                    <span class="lupa-busca">🔍</span>
+                    <input type="text" id="inputFiltrar" class="input-estilizado" placeholder="Digite o nome do documento...">
+                </div>
+
+                <div class="lista-titulo">Documentos cadastrados</div>
+                <ul class="lista-documentos" id="listaDocsContainer">
+                    <li style="color: #94a3b8; font-size: 0.9rem;">Buscando arquivos...</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    #app-equipamento-root { font-family: "Segoe UI", -apple-system, sans-serif; background-color: #f4f6f9; padding: 20px; width: 100%; box-sizing: border-box; }
+    #app-equipamento-root .tit-principal { color: #888888; text-transform: uppercase; font-size: 1.15rem; margin-bottom: 20px; font-weight: 700; text-align: center; }
+    #app-equipamento-root .container-flex { display: flex; gap: 20px; width: 100%; max-width: 1100px; margin: 0 auto; }
+    #app-equipamento-root .col-esquerda { width: 30%; display: flex; flex-direction: column; gap: 20px; }
+    #app-equipamento-root .col-direita { width: 70%; }
+    #app-equipamento-root .cartao-sp { background: #ffffff; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); padding: 20px; text-align: center; border: 1px solid #e2e8f0; box-sizing: border-box; }
+    #app-equipamento-root .busca-bloco { text-align: left; min-height: 380px; }
+    #app-equipamento-root .cartao-titulo { color: #888888; font-weight: 700; text-transform: uppercase; font-size: 0.85rem; margin-bottom: 15px; letter-spacing: 0.5px; }
+    #app-equipamento-root .container-imagem { width: 100%; height: 120px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; }
+    #app-equipamento-root #foto-equipamento { max-width: 100%; max-height: 100%; object-fit: contain; }
+    #app-equipamento-root .nome-maquina { font-weight: 700; color: #4a5568; font-size: 0.9rem; }
+    #app-equipamento-root .icone-doc { font-size: 36px; margin-bottom: 8px; }
+    #app-equipamento-root .contador-doc { font-weight: 700; color: #4a5568; font-size: 0.9rem; }
+    #app-equipamento-root .campo-busca-wrapper { position: relative; margin-bottom: 20px; }
+    #app-equipamento-root .input-estilizado { width: 100%; padding: 10px 10px 10px 35px; font-size: 0.95rem; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box; outline: none; }
+    #app-equipamento-root .lupa-busca { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: #94a3b8; }
+    #app-equipamento-root .lista-titulo { color: #888888; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; margin-bottom: 15px; }
+    #app-equipamento-root .lista-documentos { list-style: none; padding: 0; margin: 0; }
+    #app-equipamento-root .item-doc { margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px dashed #e2e8f0; }
+    #app-equipamento-root .link-doc { color: #b05060; text-decoration: underline; font-size: 0.95rem; font-weight: 600; word-break: break-all; cursor: pointer; }
+    @media (max-width: 768px) { #app-equipamento-root .container-flex { flex-direction: column; } #app-equipamento-root .col-esquerda, #app-equipamento-root .col-direita { width: 100%; } }
+</style>
+
+<script>
+    // DOCUMENTOS PÚBLICOS DE TESTE (Para demonstrar a experiência do usuário sem travas de rede)
+    window.meusDocumentosEquip = [
+        {
+            nome: "VP120-1 - MANUAL DE INSTRUÇÕES GERAIS.pdf",
+            url: "https://w3.org"
+        },
+        {
+            nome: "TRANSP DET DE METAIS TCL1215-090-AB.pdf",
+            url: "https://w3.org"
+        }
+    ];
+
+    window.executarMontagemPainel = function() {
+        var input = document.getElementById('inputFiltrar');
+        var lista = document.getElementById('listaDocsContainer');
+        var contador = document.getElementById('total-docs-count');
+
+        if (!input || !lista || !contador) return false;
+
+        var dados = window.meusDocumentosEquip;
+
+        function renderizar(itens) {
+            lista.innerHTML = '';
+            if (itens.length === 0) {
+                lista.innerHTML = '<li style="color: #94a3b8; font-size: 0.9rem;">Nenhum documento encontrado.</li>';
+                return;
+            }
+            itens.forEach(function(doc) {
+                var li = document.createElement('li');
+                li.className = 'item-doc';
+                var a = document.createElement('a');
+                a.className = 'link-doc';
+                a.textContent = doc.nome;
+                a.href = doc.url;
+                a.target = "_blank";
+                li.appendChild(a);
+                lista.appendChild(li);
+            });
+        }
+
+        input.oninput = function(e) {
+            var busca = e.target.value.toLowerCase();
+            var filtrados = dados.filter(function(d) {
+                return d.nome.toLowerCase().indexOf(busca) > -1;
+            });
+            renderizar(filtrados);
+        };
+
+        contador.textContent = dados.length + " documentos totais";
+        renderizar(dados);
+        return true;
+    };
+
+    window.executarMontagemPainel();
+    setTimeout(window.executarMontagemPainel, 300);
+</script>
